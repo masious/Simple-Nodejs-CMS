@@ -9,7 +9,7 @@ block content
 				li(style="margin-left:20px;margin-bottom:10px;")= comment.body
 		ul
 		form(method='post',action='/comments/add/'+post.id)
-			div.col-sm-10
+			div.col-sm-10.col-xs-8
 				textarea.form-control#comment(name="body",placeholder="Enter your comment...",class='form-control')
-			input(type="submit",class="col-sm-2 btn btn-primary",style='height:52px')
+			input.col-sm-2.col-xs-4.btn.btn-primary(type="submit",style='height:52px')
 			div.clearfix
