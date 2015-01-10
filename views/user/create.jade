@@ -1,0 +1,25 @@
+extend ../layout
+
+block content
+	script(src='/js/jquery.min.js')
+	script(src='/js/bootstrap.min.js')
+	script.
+		$(function(){
+			$('#username').keypress(function(t){
+				var usernameField = $(this);
+				$.post('/user/is_user',{username:usernameField.val()},function(o){console.log(o);
+					if(o == 'thereis')
+						usernameField.addClass('has-error').removeClass('has-success');
+					else
+						usernameField.addClass('has-success').removeClass('has-error');
+				});
+			});
+		});
+
+
+	h2#create-new-user.centered-text.well Create New User
+	form(action='create',method='post')
+		input#username.input-group.form-control(type='text',name='username',placeholder='Username')
+		input#password.input-group.form-control(type='text',name='password',placeholder='Password')
+		input#email.input-group.form-control(type='text',name='email',placeholder='email')
+		input#submit.col-sm-12.input-group.btn.btn-primary(type='submit',value='Add New user')

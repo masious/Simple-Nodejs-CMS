@@ -1,0 +1,12 @@
+extend ../layout
+
+block content
+	include ../partials/post
+	div.comments
+		h4 Comments of users
+		li(style="margin-left:20px;margin-bottom:10px;") no comments to show
+		form(method='post',action='/comments/add'+post.id)
+			div.col-sm-10
+				textarea.form-control#comment(placeholder="Enter your comment...",class='form-control')
+			input(type="submit",class="col-sm-2 btn btn-primary",style='height:52px')
+			div.clearfix

@@ -1,0 +1,10 @@
+extends ../layout
+	
+block content
+	h2.well.centered-text Users list
+	if isAdded
+		p.bg-success(style="padding:10px") New user added successfully :)
+	ol
+		each user in users
+			li #{user.username}: #{user.email}
+	a(href='/user/create') Create new User

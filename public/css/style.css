@@ -1,0 +1,38 @@
+.input-group{
+	margin-bottom: 10px;
+}
+
+.container{
+	padding-top: 30px;
+}
+
+.centered-text{
+	text-align: center;
+}
+
+#submit{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.has-success{
+	border: 1px solid green;
+}
+.has-error{
+	border: 1px solid red;
+}
+
+.post{
+	margin-bottom: 10px;
+}
+.post h3{
+	background: #888;
+	color: #fff;
+	padding:5px;
+	text-shadow:0 2px 2px #000;
+}
+
+.comments{
+	background: #eee;
+	padding:5px;
+}
