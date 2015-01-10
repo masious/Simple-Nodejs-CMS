@@ -28,7 +28,10 @@ app.use(function(req,res,next){
 
 var userController = require('./controller/UserController');
 var postController = require('./controller/PostController');
+var commentController = require('./controller/CommentController');
+
 app.use('/user',userController);
+app.use('/comments',commentController);
 app.use('/',postController);
 app.listen('3000');
 
