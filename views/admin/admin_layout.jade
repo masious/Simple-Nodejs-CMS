@@ -1,0 +1,16 @@
+extend ../layout
+
+block content
+	div.col-sm-1
+		h3 Options
+		ul
+			li
+				a(href="/admin/Panel") Panel
+			li
+				a(href="/admin/posts") Posts
+			li
+				a(href="/admin/comments") Comments
+			li
+				a(href="/admin/users") Users
+	div.col-sm-10.col-md-offset-1
+		block adminContent

@@ -1,0 +1,33 @@
+extend admin_layout
+
+block adminContent
+	h3.centered-text Comments
+	ul.nav.nav-tabs.nav-justified
+		li.active
+			a(href='/admin/comments/') All Comments
+		li
+			a(href='/admin/comments/Need Attention') Need Attention
+		li
+			a(href='/admin/comments/accepted') Accepted Comments
+		li
+			a(href='/admin/comments/unaccepted') Unaccepted Comments
+	table.table.table-striped.table-hover
+		th ID
+		th Post
+		th Body
+		th Accept Comment
+		th Date
+		each comment in comments
+			tr
+				td= comment.id
+				td= comment.title
+				td= comment.body
+				if !comment.is_accepted
+					td
+						a.btn.btn-success(href='/admin/comments/accept/'+comment.id)
+							span.glyphicon.glyphicon-ok
+						a.col-sm-offset-1.btn.btn-danger(href='/admin/comments/accept/'+comment.id)
+							span.glyphicon.glyphicon-remove
+				else
+					td Accepted
+				td= comment.created_at

@@ -1,0 +1,8 @@
+extend admin_layout
+
+block adminContent
+	h2#create-new-post.centered-text.well Create New Post
+	form(action='create',method='post')
+		input#title.input-group.form-control(type='text',name='title',placeholder='Title')
+		textarea#body.input-group.form-control(name='body',placeholder='Enter your post body...')
+		input#submit.col-sm-12.input-group.btn.btn-primary(type='submit',value='Publish post')

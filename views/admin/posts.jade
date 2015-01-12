@@ -1,0 +1,17 @@
+extend admin_layout
+
+block adminContent
+	h3.centered-text Posts
+	a(href='/admin/posts/create') Create New Post
+	table.table.table-striped.table-hover
+		th ID
+		th Title
+		th Body
+		th Date
+		each post in posts
+			tr
+				td= post.id
+				td= post.title
+				td= post.body
+				td= post.created_at
+
