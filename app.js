@@ -1,3 +1,4 @@
+var http 		 = require('http');
 var express  	 = require('express');
 var mysql	 	 = require('mysql');
 var multer	 	 = require('multer');
@@ -26,13 +27,18 @@ app.use(function(req,res,next){
 	next();
 });
 
-var userController = require('./controller/UserController');
-var postController = require('./controller/PostController');
-var commentController = require('./controller/CommentController');
+var userController 		= require('./controller/UserController');
+var postController 		= require('./controller/PostController');
+var commentController 	= require('./controller/CommentController');
+var adminController 	= require('./controller/AdminController');
 
 app.use('/user',userController);
 app.use('/comments',commentController);
+app.use('/admin',adminController);
 app.use('/',postController);
-app.listen('3000');
+
+var port = 3000;
+http.createServer(app).listen(port);
+console.log('Server started on port ' + port);
 
 module.exports = app;

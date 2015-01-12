@@ -6,10 +6,17 @@ block content
 		h4 Comments of users
 		ul
 			each comment in comments?comments:["no comments to show"]
-				li(style="margin-left:20px;margin-bottom:10px;")= comment.body
+				li(style="margin-left:20px;margin-bottom:10px;")
+					a(href='mailto:'+comment.email)
+						b= comment.display_name+': '
+					=comment.body
 		ul
 		form(method='post',action='/comments/add/'+post.id)
 			div.col-sm-10.col-xs-8
-				textarea.form-control#comment(name="body",placeholder="Enter your comment...",class='form-control')
+				input.form-control#display-name(name='displayName',placeholder='Display Name')
+				br
+				input.form-control#email(name='email',placeholder='Email')
+				br
+				textarea.form-control#comment(name="body",placeholder="Enter your comment...")
 			input.col-sm-2.col-xs-4.btn.btn-primary(type="submit",style='height:52px')
 			div.clearfix
