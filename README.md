@@ -1,0 +1,1 @@
+This is a simple CMS created using Node.js and express framework.
