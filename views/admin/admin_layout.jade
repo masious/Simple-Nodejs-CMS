@@ -1,16 +1,22 @@
 extend ../layout
 
 block content
-	div.col-sm-1
-		h3 Options
-		ul
-			li
-				a(href="/admin/Panel") Panel
-			li
-				a(href="/admin/posts") Posts
-			li
-				a(href="/admin/comments") Comments
-			li
-				a(href="/admin/users") Users
-	div.col-sm-10.col-md-offset-1
+	div.col-sm-2
+		div.panel.panel-default
+			div.panel-heading
+				h3.panel-title Options
+			ul.list-group
+				li.list-group-item
+					a(href="/admin/panel") Panel
+				li.list-group-item
+					a(href="/admin/posts") Posts
+				li.list-group-item
+					a(href="/admin/comments") 
+					| Comments
+					if commentsCount
+						span.badge= commentsCount
+				li.list-group-item
+					a(href="/admin/users") Users
+	div.col-sm-10
+		include ../partials/message
 		block adminContent

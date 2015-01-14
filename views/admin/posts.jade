@@ -1,17 +1,27 @@
 extend admin_layout
 
 block adminContent
-	h3.centered-text Posts
-	a(href='/admin/posts/create') Create New Post
-	table.table.table-striped.table-hover
-		th ID
-		th Title
-		th Body
-		th Date
-		each post in posts
-			tr
-				td= post.id
-				td= post.title
-				td= post.body
-				td= post.created_at
-
+	div.panel.panel-default
+			div.panel-heading
+				.panel-title(style='display:inline-block;font-size:25px')  Posts
+				a(href='/admin/posts/create')
+					div.btn.btn-primary.pull-right(style='display:inline')
+						span.glyphicon.glyphicon-share(style='margin-right:5px')
+						| Create New Post
+				.clearfix
+			table.table.table-striped.table-hover
+				th ID
+				th Title
+				th Body
+				th Date
+				th Edit
+				each post in posts
+					tr
+						td= post.id
+						td
+							a(href='/posts/'+post.id)= post.title
+						td= post.body
+						td= post.created_at
+						td.centered-text
+							a(href='/admin/posts/'+post.id)
+								span.glyphicon.glyphicon-edit

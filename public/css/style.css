@@ -1,5 +1,5 @@
 .input-group{
-	margin-bottom: 10px;
+	margin-bottom: 1%;
 }
 
 .container{
@@ -22,18 +22,27 @@
 	border: 1px solid red;
 }
 
-.post{
-	margin-bottom: 10px;
-}
-.post h3{
-	background: #888;
-	color: #fff;
-	padding:5px;
-	border-radius:5px;
-	text-shadow:0 2px 2px #000;
-}
-
 .comments{
 	background: #eee;
 	padding:5px;
+}
+
+.spaced{
+	margin: 1%;
+}
+
+.spaced-but-top{
+	margin-left: 1%;
+	margin-right: 1%;
+	margin-bottom: 1%;
+}
+
+.bordered-but-top{
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+}
+
+.padded{
+	padding:1%;
 }

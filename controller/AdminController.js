@@ -1,12 +1,13 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var sessionParser = require('express-session');
+var stripTags = require('striptags');
 var utils = require('../util.js');
 var router = express.Router();
 
 router.use(sessionParser({
 	secret: '1234567890QWERTY',
-	resave: false,
+	resave: true,
 	saveUninitialized: false
 }));
 
@@ -49,34 +50,59 @@ router.get('/panel',function(req,res){
 });
 
 router.get('/posts/create',function(req,res){
-	res.render('admin/post_create');
+	res.render('admin/post_create',{post: {title:'',body:''}});
 });
 router.post('/posts/create',function(req,res){
 	req.db().query('INSERT INTO posts (author_id,title,body) VALUES (?,?,?)',
-		[req.session.user.id, req.body.title, req.body.body], function(){
-		res.redirect('/admin/posts');
+		[1, req.body.title, req.body.body], function(){
+		res.redirect('/admin/posts?created=1');
 	});
 });
 
 router.get('/posts',function(req,res){
+	var viewVars = {};
+	if(typeof req.query.edit != 'undefined')
+		viewVars['success'] = 'Edited post, saved successfully.';
+	if(typeof req.query.created != 'undefined')
+		viewVars['success'] = 'New post created successfully.';
+	
 	req.db().query('SELECT * FROM posts ORDER BY id DESC',function(err,posts){
 		for(var post in posts){
-			posts[post].body = utils.shorten(posts[post].body);
+			posts[post].body = utils.shorten(stripTags(posts[post].body,{allowedTags:false,allowedAttributes: false})).replace('&nbsp;',' ');
 		}
-		res.render('admin/posts',{posts: posts});
+		viewVars['posts'] = posts;
+		res.render('admin/posts',viewVars);
 	})
 });
 
+router.get('/posts/:id',function(req,res){
+	req.db().query('SELECT * FROM posts WHERE id=?',[req.params.id],function(err,posts){
+		res.render('admin/post_create',{post: posts[0]});
+	});
+});
+router.post('/posts/:id',function(req,res){
+	var post = req.body;
+	req.db().query('UPDATE posts SET title=?,body=? WHERE id=?',[post.title,post.body,req.params.id],function(err){
+		res.redirect('/admin/posts?edit=1')
+	});
+})
+
 router.get('/comments/accept/:id',function(req,res){
 	req.db().query('UPDATE comments SET is_accepted=? WHERE id=?',[1,req.params.id],function(err){
-		utils.goBack(req,res);
+		utils.goBack(req,res,'accepted');
 	});
 });
 
 router.get('/comments',function(req,res){
+	var viewVars = {};
+	if(typeof req.query.accepted != 'undefined')
+		viewVars['success'] = 'Comment accepted successfully.';
+
 	req.db().query(
 		'SELECT comments.*,posts.title FROM comments LEFT JOIN posts ON comments.post_id=posts.id ORDER By comments.id DESC',function(err,comments){
-		res.render('admin/comments',{comments: comments});
+			viewVars['comments'] = comments;
+			viewVars['commentsCount'] = comments.length;
+			res.render('admin/comments',viewVars);
 	});
 });
 

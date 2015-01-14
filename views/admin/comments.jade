@@ -1,33 +1,41 @@
 extend admin_layout
 
 block adminContent
-	h3.centered-text Comments
-	ul.nav.nav-tabs.nav-justified
-		li.active
-			a(href='/admin/comments/') All Comments
-		li
-			a(href='/admin/comments/Need Attention') Need Attention
-		li
-			a(href='/admin/comments/accepted') Accepted Comments
-		li
-			a(href='/admin/comments/unaccepted') Unaccepted Comments
-	table.table.table-striped.table-hover
-		th ID
-		th Post
-		th Body
-		th Accept Comment
-		th Date
-		each comment in comments
-			tr
-				td= comment.id
-				td= comment.title
-				td= comment.body
-				if !comment.is_accepted
-					td
-						a.btn.btn-success(href='/admin/comments/accept/'+comment.id)
-							span.glyphicon.glyphicon-ok
-						a.col-sm-offset-1.btn.btn-danger(href='/admin/comments/accept/'+comment.id)
-							span.glyphicon.glyphicon-remove
-				else
-					td Accepted
-				td= comment.created_at
+	div.panel.panel-default
+		div.panel-heading
+			h3.panel-title  Comments
+		div.spaced(role='tabpanel')
+			ul.nav.nav-tabs.nav-justified
+				li.active
+					a(href='/admin/comments/') All Comments
+				li
+					a(href='/admin/comments/Need Attention') Need Attention
+				li
+					a(href='/admin/comments/accepted') Accepted Comments
+				li
+					a(href='/admin/comments/unaccepted') Unaccepted Comments
+				.tab-content.tab-pane.bordered-but-top.padded
+					table.table.table-striped.table-hover
+						th ID
+						th Display Name
+						th Post
+						th Body
+						th Accept Comment
+						th Date
+						each comment in comments
+							tr
+								td= comment.id
+								td= comment.display_name
+								td= comment.title
+								td= comment.body
+								if comment.is_accepted == null
+									td
+										a.btn.btn-success(href='/admin/comments/accept/'+comment.id)
+											span.glyphicon.glyphicon-ok
+										a.col-sm-offset-1.btn.btn-danger(href='/admin/comments/accept/'+comment.id)
+											span.glyphicon.glyphicon-remove
+								else if comment.is_accepted == 1
+									td Accepted
+								else
+									td Ignored
+								td= comment.created_at

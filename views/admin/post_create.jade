@@ -1,8 +1,23 @@
 extend admin_layout
 
 block adminContent
-	h2#create-new-post.centered-text.well Create New Post
-	form(action='create',method='post')
-		input#title.input-group.form-control(type='text',name='title',placeholder='Title')
-		textarea#body.input-group.form-control(name='body',placeholder='Enter your post body...')
-		input#submit.col-sm-12.input-group.btn.btn-primary(type='submit',value='Publish post')
+	script(src='/js/tinymce/tinymce.js')
+	script.
+		tinymce.init({
+		    selector: "#body",
+		    plugins: [
+		        "advlist autolink lists link image charmap print preview anchor",
+		        "searchreplace visualblocks code fullscreen",
+		        "insertdatetime media table contextmenu paste"
+		    ],
+		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+		});
+	div.panel.panel-default
+		div.panel-heading
+			h3.panel-title  Create New Post
+		form(action='/admin/posts/'+(post.id>0)?post.id:'create',method='post',style='margin:10px')
+			input#title.input-group.form-control(type='text',name='title',placeholder='Title',value=post.title)
+			textarea#body.input-group.form-control(name='body')= post.body
+			button#submit.col-sm-12.input-group.btn.btn-primary(type='submit',style='margin-top:10px')
+				span.glyphicon.glyphicon-share(style='margin-right:5px')
+				| Publish post
